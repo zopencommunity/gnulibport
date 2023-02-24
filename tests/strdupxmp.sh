@@ -1,6 +1,15 @@
 #!/bin/sh
 
-gnulibtool="$PWD/../gnulib/gnulib-tool"
+#
+# A basic program that uses strdup from gnulib
+# to validate that gnulib can be used.
+# 
+# This requires:
+#  - autoconf, automake, make, perl, m4
+mydir="$( cd "$(dirname "$0")" >/dev/null 2>&1 && pwd -P )"
+cd "${mydir}" || exit 99
+
+gnulibtool="${mydir}/../gnulib/gnulib-tool"
 if ! [ -f "${gnulibtool}" ]; then
   echo "Can not find gnulib-tool" >&2
   exit 4
@@ -10,20 +19,6 @@ rm -rf example
 mkdir example || exit 99
 cd example || exit 99
 mkdir src || exit 99
-
-#Instructions for using gnulib-tool
-#
-#You may need to add #include directives for the following .h files.
-#  #include <string.h>
-#
-#Don't forget to
-#  - add "lib/Makefile" to AC_CONFIG_FILES in ./configure.ac,
-#  - mention "lib" in SUBDIRS in Makefile.am,
-#  - mention "-I m4" in ACLOCAL_AMFLAGS in Makefile.am
-#    or add an AC_CONFIG_MACRO_DIRS([m4]) invocation in ./configure.ac,
-#  - mention "m4/gnulib-cache.m4" in EXTRA_DIST in Makefile.am,
-#  - invoke gl_EARLY in ./configure.ac, right after AC_PROG_CC,
-#  - invoke gl_INIT in ./configure.ac.
 
 cat >configure.ac <<ZZ
 AC_INIT([example-c], [0])
@@ -62,7 +57,7 @@ ZZ
 
 cat >src/Makefile.am <<ZZ
 AM_CPPFLAGS = -I\$(top_builddir)/lib -I\$(top_srcdir)/lib
-LDADD = ../lib/libgnu.a
+LDADD = \$(top_builddir)/lib/libgnu.a
 bin_PROGRAMS = example
 example_SOURCES = example.c
 ZZ
@@ -103,4 +98,7 @@ if ! make ; then
   exit 8
 fi
 
-
+if ! src/example ; then
+  echo "example program failed" >&2
+  exit 8
+fi
