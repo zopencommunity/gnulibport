@@ -62,7 +62,7 @@ ZZ
 
 cat >src/Makefile.am <<ZZ
 AM_CPPFLAGS = -I\$(top_builddir)/lib -I\$(top_srcdir)/lib
-LDADD = lib/libgnu.a
+LDADD = ../lib/libgnu.a
 bin_PROGRAMS = example
 example_SOURCES = example.c
 ZZ
@@ -87,4 +87,20 @@ if ! "${gnulibtool}" --import strdup-posix ; then
   echo "Unable to run gnulibtool to create simple stdup example" >&2
   exit 8
 fi
+
+if ! autoreconf --install ; then
+  echo "autoreconf failed" >&2
+  exit 8
+fi
+
+if ! ./configure CC=xlclang ; then
+  echo "configure failed" >&2
+  exit 8
+fi
+
+if ! make ; then
+  echo "make failed" >&2
+  exit 8
+fi
+
 
