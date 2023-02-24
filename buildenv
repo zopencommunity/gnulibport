@@ -3,17 +3,19 @@ export ZOPEN_GIT_URL="https://git.savannah.gnu.org/git/gnulib.git"
 #
 # diffutils required for 'diff -u' capability
 # coreutils required for fmt command
-#
-export ZOPEN_GIT_DEPS="curl make git diffutils coreutils perl m4"
+# autoconf automake make perl m4 required for running test
+export ZOPEN_GIT_DEPS="curl make git findutils grep diffutils coreutils perl m4 autoconf automake"
 export ZOPEN_TYPE="GIT"
 
 #
-# All we run is -check-
+# We run a test out of the tests directory
 #
 export ZOPEN_BOOTSTRAP='skip'
 export ZOPEN_CONFIGURE='skip'
 export ZOPEN_MAKE='skip'
 export ZOPEN_INSTALL='skip'
+export ZOPEN_CHECK='../tests/basic.sh'
+export ZOPEN_CHECK_OPTS=''
 
 zopen_check_results()
 {
@@ -21,8 +23,11 @@ zopen_check_results()
   pfx="$2"
   chk="$1/$2_check.log"
 
-  # Echo the following information to guage build health
-  echo "actualFailures:0"
+  if ! grep 'Test passed' "${chk}" ; then
+    echo "actualFailures:0"
+  else
+    echo "actualFailures:1"
+  fi
   echo "totalTests:1"
   echo "expectedFailures:0"
 }
