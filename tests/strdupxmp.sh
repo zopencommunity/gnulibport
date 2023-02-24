@@ -9,6 +9,7 @@ fi
 rm -rf example 
 mkdir example || exit 99
 cd example || exit 99
+mkdir src || exit 99
 
 #Instructions for using gnulib-tool
 #
@@ -24,32 +25,65 @@ cd example || exit 99
 #  - invoke gl_EARLY in ./configure.ac, right after AC_PROG_CC,
 #  - invoke gl_INIT in ./configure.ac.
 
-cat >configure.ac || exit 99 <<ZZ
+cat >configure.ac <<ZZ
 AC_INIT([example-c], [0])
-AC_CONFIG_AUX_DIR([build-aux])
-AC_CONFIG_SRCDIR([src/example.c])
-AM_INIT_AUTOMAKE
-
-AC_CONFIG_HEADERS([config.h])
-AC_CONFIG_FILES([Makefile.am])
-
+AM_INIT_AUTOMAKE([])
 AC_PROG_CC
+AC_CONFIG_HEADERS([config.h])
+AC_CONFIG_FILES([
+ Makefile
+ src/Makefile
+ lib/Makefile
+])
 
 gl_EARLY
 gl_INIT
-
-AC_CONFIG_FILES([Makefile])
 AC_OUTPUT
 ZZ
 
-cat >Makefile.am || exit 99 <<ZZ
+cat >Makefile.am <<ZZ
 ACLOCAL_AMFLAGS = -I m4 
-SUBDIRS = lib
+SUBDIRS = lib src
 EXTRA_DIST = m4/gnulib-cache.m4
-
 ZZ
 
-if ! "${gnulibtool}" --import strdup ; then
+cat >src/example.c <<ZZ
+#include <config.h>
+#include <stdio.h>
+
+#include <string.h> /* for strdup */
+
+int main () {
+  puts(strdup("Hello world"));
+
+  return 0;
+}
+ZZ
+
+cat >src/Makefile.am <<ZZ
+AM_CPPFLAGS = -I\$(top_builddir)/lib -I\$(top_srcdir)/lib
+LDADD = lib/libgnu.a
+bin_PROGRAMS = example
+example_SOURCES = example.c
+ZZ
+
+cat >AUTHORS <<ZZ
+  z/OS Open Tools
+ZZ
+
+cat >ChangeLog <<ZZ
+  creation
+ZZ
+
+cat >NEWS <<ZZ
+  I get all the news I need on the Weather Report
+ZZ
+
+cat >README <<ZZ
+  Example to validate gnulib basics ok
+ZZ
+
+if ! "${gnulibtool}" --import strdup-posix ; then
   echo "Unable to run gnulibtool to create simple stdup example" >&2
   exit 8
 fi
