@@ -1,7 +1,7 @@
 #!/bin/sh
 
 #
-# A basic program that uses strdup from gnulib
+# A basic program that uses a function from gnulib
 # to validate that gnulib can be used.
 # 
 # This requires:
@@ -46,12 +46,16 @@ cat >src/example.c <<ZZ
 #include <config.h>
 #include <stdio.h>
 
-#include <string.h> /* for strdup */
+#include <string.h> /* for stpcpy */
 
 int main () {
-  puts(strdup("Hello world"));
+    char buffer [10];
+    char *name = buffer;
 
-  return 0;
+
+    name = stpcpy (stpcpy (stpcpy (name, "ice"),"-"), "cream");
+    puts (buffer);
+    return 0;
 }
 ZZ
 
@@ -78,8 +82,8 @@ cat >README <<ZZ
   Example to validate gnulib basics ok
 ZZ
 
-if ! "${gnulibtool}" --import strdup-posix ; then
-  echo "Unable to run gnulibtool to create simple stdup example" >&2
+if ! "${gnulibtool}" --import stpcpy ; then
+  echo "Unable to run gnulibtool to create simple stpcpy example" >&2
   exit 8
 fi
 
@@ -102,3 +106,6 @@ if ! src/example ; then
   echo "example program failed" >&2
   exit 8
 fi
+
+echo "Test Passed"
+exit 0
