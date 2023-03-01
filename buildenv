@@ -13,7 +13,9 @@ export ZOPEN_TYPE="GIT"
 export ZOPEN_BOOTSTRAP='skip'
 export ZOPEN_CONFIGURE='skip'
 export ZOPEN_MAKE='skip'
-export ZOPEN_INSTALL='skip'
+export ZOPEN_INSTALL='../install.sh'
+export ZOPEN_INSTALL_OPTS=''
+
 export ZOPEN_CHECK='../tests/basic.sh'
 export ZOPEN_CHECK_OPTS=''
 
@@ -35,4 +37,10 @@ zopen_check_results()
 zopen_append_to_env()
 {
   # echo envars outside of PATH, MANPATH, LIBPATH
+}
+
+zopen_get_version()
+{
+  info=$(./gnulib-tool --version)
+  echo "${info}" | head -n 1 | cut -d' ' -f6
 }
