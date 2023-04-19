@@ -4,7 +4,7 @@ export ZOPEN_GIT_URL="https://git.savannah.gnu.org/git/gnulib.git"
 # diffutils required for 'diff -u' capability
 # coreutils required for fmt command
 # autoconf automake make perl m4 required for running test
-export ZOPEN_GIT_DEPS="curl make git findutils grep diffutils coreutils perl m4 autoconf automake"
+export ZOPEN_GIT_DEPS="curl make git findutils grep diffutils coreutils perl m4 autoconf automake zoslib"
 export ZOPEN_TYPE="GIT"
 
 #
