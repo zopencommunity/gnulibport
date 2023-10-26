@@ -1,15 +1,13 @@
-export ZOPEN_GIT_URL="https://git.savannah.gnu.org/git/gnulib.git"
+# bump: gnulib-version /GNULIB_VERSION="(.*)"/ https://git.savannah.gnu.org/git/gnulib.git|semver:*
+GNULIB_VERSION="20030404"
 
-#
 # diffutils required for 'diff -u' capability
 # coreutils required for fmt command
 # autoconf automake make perl m4 required for running test
-export ZOPEN_GIT_DEPS="curl make git findutils grep diffutils coreutils perl m4 autoconf automake zoslib"
-export ZOPEN_TYPE="GIT"
+export ZOPEN_DEV_DEPS="curl make git findutils grep diffutils coreutils perl m4 autoconf automake zoslib"
+export ZOPEN_DEV_URL="https://git.savannah.gnu.org/git/gnulib.git"
+export ZOPEN_BUILD_LINE="DEV"
 
-#
-# We run a test out of the tests directory
-#
 export ZOPEN_BOOTSTRAP='skip'
 export ZOPEN_CONFIGURE='skip'
 export ZOPEN_MAKE='skip'
