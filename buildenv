@@ -2,6 +2,7 @@
 GNULIB_VERSION="20030404"
 
 # diffutils required for 'diff -u' capability
+export ZOPEN_CATEGORIES="library"
 # coreutils required for fmt command
 # autoconf automake make perl m4 required for running test
 export ZOPEN_DEV_DEPS="curl make git findutils grep diffutils coreutils perl m4 autoconf automake zoslib"
