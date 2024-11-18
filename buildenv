@@ -1,5 +1,5 @@
 # bump: gnulib-version /GNULIB_VERSION="(.*)"/ https://git.savannah.gnu.org/git/gnulib.git|semver:*
-GNULIB_VERSION="20030404"
+GNULIB_VERSION="1.0"
 
 # diffutils required for 'diff -u' capability
 export ZOPEN_CATEGORIES="library"
