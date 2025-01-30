@@ -1,5 +1,35 @@
 [![Automatic version updates](https://github.com/ZOSOpenTools/gnulibport/actions/workflows/bump.yml/badge.svg)](https://github.com/ZOSOpenTools/gnulibport/actions/workflows/bump.yml)
 
-# gnulib
+# Gnulib
 
-Gnulib is a central location for common GNU code, intended to be shared among GNU packages.
+A library containing common functions used in GNU software
+
+# Installation and Usage
+
+Use the zopen package manager ([QuickStart Guide](https://zopen.community/#/Guides/QuickStart)) to install:
+```bash
+zopen install gnulib
+```
+
+# Building from Source
+
+1. Clone the repository:
+```bash
+git clone https://github.com/zopencommunity/gnulibport.git
+cd gnulibport
+```
+2. Build using zopen:
+```bash
+zopen build -vv
+```
+
+See the [zopen porting guide](https://zopen.community/#/Guides/Porting) for more details.
+
+# Documentation
+
+
+# Troubleshooting
+TBD
+
+# Contributing
+Contributions are welcome! Please follow the [zopen contribution guidelines](https://github.com/zopencommunity/meta/blob/main/CONTRIBUTING.md).
